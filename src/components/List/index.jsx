@@ -1,6 +1,9 @@
+import { useDispatch } from 'react-redux'
+import { logout } from '../../slicers/auth.js'
 import { Container, Toolbar, SearchBar, ChatList } from './styles.js'
-import { BiSolidMessageAdd } from "react-icons/bi"
+import { BiSolidMessageAdd, BiLogOut } from "react-icons/bi"
 import ChatCard from './ChatCard'
+import { auth } from '../../db/fireBase.js'
 
 const users = [
   {
@@ -65,12 +68,21 @@ const users = [
   }
 ];
 
-function List({ isOneToOne = false }) {
+function List({ type }) {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+
+    auth.signOut();
+  };
+
   return (
   <Container>
     <Toolbar>
+    {type === 'oneToOne' && <BiLogOut size={30} color="#2C3531" cursor="pointer" onClick={handleLogout}/>}
     <SearchBar placeholder='Search...' type='text'/>
-    {isOneToOne && <BiSolidMessageAdd size={30} color="#2C3531" cursor="pointer"/>}
+    {type === 'oneToOne' && <BiSolidMessageAdd size={30} color="#2C3531" cursor="pointer"/>}
     </Toolbar>
     <ChatList>
       {users.map(user => {
