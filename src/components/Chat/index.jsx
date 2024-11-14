@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { Container, Header, Messages, InputContainer, Input, UserStatus } from './styles.js'
 import { IoMdSend } from "react-icons/io"
 import { IoPersonCircle } from "react-icons/io5"
@@ -5,6 +6,12 @@ import { FaCircle } from "react-icons/fa"
 import Message from './Message'
 
 function Chat() {
+  const endRef = useRef(null);
+
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: 'smooth'});
+  }, []);
+
   return (
   <Container>
     <Header>
@@ -25,6 +32,7 @@ function Chat() {
       <Message />
       <Message />
       <Message />
+      <div ref={endRef}/>
     </Messages>
     <InputContainer>
     <Input type='text' placeholder='Type a message...'/>
