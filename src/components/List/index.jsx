@@ -1,78 +1,80 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect, useState } from 'react'
-import { logout } from '../../slicers/auth.js'
-import { Container, Toolbar, SearchBar, ChatList } from './styles.js'
-import { BiSolidMessageAdd, BiLogOut } from "react-icons/bi"
-import { doc, getDoc, onSnapshot } from "firebase/firestore"
-import ChatCard from './ChatCard'
-import { auth, db } from '../../db/fireBase.js'
-import AddChat from './AddChat'
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../slicers/auth.js';
+import { Container, Toolbar, SearchBar, ChatList } from './styles.js';
+import { BiSolidMessageAdd, BiLogOut } from "react-icons/bi";
+import ChatCard from './ChatCard';
+import AddChat from './AddChat';
+import useChats from '../../hooks/useChats.js';
+import { updateMessageStatus } from '../../Utils/updateMessagesStatus.js';
+import { auth, db } from '../../db/fireBase.js';
+import { doc, onSnapshot } from 'firebase/firestore';
 
 function List({ type }) {
-  const [chats, setChats] = useState([]);
   const [isShowAddChat, setIsShowAddChat] = useState(false);
-
   const { currentUser } = useSelector(state => state.authenticate);
+  const { chatId } = useSelector(state => state.chat);
   const dispatch = useDispatch();
+
+  const chats = useChats(currentUser.id);
 
   const handleLogout = () => {
     dispatch(logout());
-
     auth.signOut();
   };
 
-  const openAddChat = () => {
-    setIsShowAddChat(true);
-  };
-
-  const closeAddChat = () => {
-    setIsShowAddChat(false);
-  };
+  const openAddChat = () => setIsShowAddChat(true);
+  const closeAddChat = () => setIsShowAddChat(false);
 
   useEffect(() => {
-    if(currentUser.id) {
-      const unsub = onSnapshot(doc(db, "userChats", currentUser.id), async res => {
-        const { chats } = res.data();
+    if (!currentUser.id) return;
 
-        const promises = chats.map(async chat => {
-          const receiverRef = doc(db, "users", chat.receiverId);
-          const receiverSnap = await getDoc(receiverRef);
+    const unsub = onSnapshot(doc(db, "userChats", currentUser.id), async (snapshot) => {
+      const data = snapshot.data();
+      if (!data?.chats) return;
 
-          const receiver = receiverSnap.data();
+      const isNotSeenChats = data.chats.filter(c => c.isSeen === false);
 
-          return {
-            ...chat,
-            receiver,
-          }
-        });
-
-        const chatsWithReceiverData = await Promise.all(promises);
-
-        const sortedChats = chatsWithReceiverData.sort((a, b) => b.updatedAt - a.updatedAt);
-
-        setChats(sortedChats);
+      const promises = isNotSeenChats.map(async chat => {
+        return updateMessageStatus(chat.chatId, currentUser.id, chatId);
       });
 
-      return () => {
-        unsub();
-      }
-    }
-  }, [currentUser.id]);
+      await Promise.all(promises);
+    });
+
+    return () => unsub();
+  }, [chatId, currentUser.id]);
 
   return (
-  <Container>
-    <Toolbar>
-    {type === 'oneToOne' && <BiLogOut size={30} color="#2C3531" cursor="pointer" onClick={handleLogout}/>}
-    <SearchBar placeholder='Search...' type='text'/>
-    {type === 'oneToOne' && <BiSolidMessageAdd size={30} color="#2C3531" cursor="pointer" onClick={openAddChat}/>}
-    </Toolbar>
-    <ChatList>
-      {chats.map(chat => {
-        return <ChatCard key={chat.id} chat={chat}/>
-      })}
-    </ChatList>
-    {type === 'oneToOne' && <AddChat isOpen={isShowAddChat} onClose={closeAddChat}/>}
-  </Container>
+    <Container type={type}>
+      <Toolbar>
+        {type === 'oneToOne' && (
+          <BiLogOut
+            size={30}
+            color="#2C3531"
+            cursor="pointer"
+            onClick={handleLogout}
+            aria-label="Logout"
+          />
+        )}
+        <SearchBar placeholder='Search...' type='text' />
+        {type === 'oneToOne' &&
+          <BiSolidMessageAdd
+            size={30}
+            color="#2C3531"
+            cursor="pointer"
+            onClick={openAddChat}
+            aria-label="Add new chat"
+          />
+        }
+      </Toolbar>
+      <ChatList>
+        {chats.map(chat => (
+          <ChatCard key={`${chat.receiverId}-${chat.updatedAt}`} chat={chat} chats={chats} />
+        ))}
+      </ChatList>
+      {type === 'oneToOne' && <AddChat isOpen={isShowAddChat} onClose={closeAddChat} />}
+    </Container>
   );
 }
 

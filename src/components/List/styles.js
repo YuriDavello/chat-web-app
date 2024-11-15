@@ -7,8 +7,9 @@ export const Container = styled.div`
   gap: 8px;
 
   flex: 1;
-
   padding: 10px;
+
+  width: 100%;
 `;
 
 export const Toolbar = styled.div`

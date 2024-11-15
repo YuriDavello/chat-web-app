@@ -15,7 +15,7 @@ function AddChat({ isOpen, onClose, onAddChat }) {
 
     const querySnapshot = await getDocs(q);
 
-    if(querySnapshot.empty) return null;
+    if (querySnapshot.empty) return null;
 
     return querySnapshot.docs[0].data();
   }
@@ -23,12 +23,12 @@ function AddChat({ isOpen, onClose, onAddChat }) {
   const handleAdd = async () => {
     const inputValue = inputRef.current.value;
 
-    if(!inputValue) return;
+    if (!inputValue) return;
 
     try {
       const userToAdd = await getUserToAdd(inputValue);
 
-      if(!userToAdd) {
+      if (!userToAdd) {
         /**TODO: toast informando */
         return;
       }
@@ -61,9 +61,7 @@ function AddChat({ isOpen, onClose, onAddChat }) {
         }),
       });
 
-      console.log('newChatRef', newChatRef.id);
-
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     } finally {
       onClose();

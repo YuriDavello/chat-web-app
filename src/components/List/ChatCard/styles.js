@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   
-  background-color: var(--primary-color);
+  background-color: ${props => (props.isSeen === true ? 'var(--primary-color)' : '#1E90FF')};
 
   height: auto;
   padding: 8px;

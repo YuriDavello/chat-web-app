@@ -23,15 +23,15 @@ const getStatusIcon = (status) => {
 
   switch (status) {
     case 'delivered':
-      statusIcon = <BiCheckDouble size={22} color="#888"/>;
+      statusIcon = <BiCheckDouble size={22} color="#888" />;
       break;
 
     case 'read':
-      statusIcon = <BiCheckDouble size={22} color="#25D366"/>;
+      statusIcon = <BiCheckDouble size={22} color="#25D366" />;
       break;
-  
+
     default:
-      statusIcon = <BiCheck size={22} color="#888"/>;
+      statusIcon = <BiCheck size={22} color="#888" />;
       break;
   }
 
@@ -45,16 +45,16 @@ function Message({ message }) {
   const isSenderCurrentUser = message.sender === currentUser.id ? true : false;
 
   return (
-        <Container key={message.createdAt} isSenderCurrentUser={isSenderCurrentUser}>
-          <Content isSenderCurrentUser={isSenderCurrentUser}>
-            <p>{message.content}</p>
-          </Content>
-          <Infos>
-            <span>{formatDate(message.createdAt)}</span>
-            {isSenderCurrentUser && getStatusIcon(message.status)}
-          </Infos>
-        </Container>
-      );
+    <Container key={message.createdAt} isSenderCurrentUser={isSenderCurrentUser}>
+      <Content isSenderCurrentUser={isSenderCurrentUser}>
+        <p>{message.content}</p>
+      </Content>
+      <Infos>
+        <span>{formatDate(message.createdAt)}</span>
+        {isSenderCurrentUser && getStatusIcon(message.status)}
+      </Infos>
+    </Container>
+  );
 }
 
 export default Message;

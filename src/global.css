@@ -1,29 +1,46 @@
 :root {
-  --title-md: bold 18px/120% sans-serif;
-  --text-sm: 14px/140% sans-serif;
+  --title-md: bold 1.125rem/1.2 sans-serif;
+  --text-sm: 0.875rem/1.4 sans-serif;
 
   --primary-color: #2C3531;
   --secondary-color: #116466;
+  --unseen-color: #1E90FF;
+  --hover-color: #3B4640;
+  --active-color: #4A5A54;
   --tertiary-color: #D1E8E2;
   --color-gray-500: #C0C4CE;
   --color-gray-600: #E2E4E9;
 }
 
-* {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   scrollbar-width: thin;
   scrollbar-color: #888 #0000;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 body {
   margin: 0;
   height: 100vh;
-  box-sizing: border-box;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h2 {

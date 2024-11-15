@@ -1,54 +1,60 @@
-import firebase from 'firebase/compat/app'
-import * as firebaseui from 'firebaseui'
-import { db, auth } from '../../db/fireBase.js'
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
-import 'firebaseui/dist/firebaseui.css'
-import { useEffect } from 'react';
+import firebase from 'firebase/compat/app';
+import * as firebaseui from 'firebaseui';
+import { db, auth } from '../../db/fireBase.js';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import 'firebaseui/dist/firebaseui.css';
+import { useEffect, useState } from 'react';
 
 function Login() {
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth);
-    
+
     const uiConfig = {
       callbacks: {
-        signInSuccessWithAuthResult: async function(authResult) {
+        signInSuccessWithAuthResult: async function (authResult) {
+          setLoading(true);
           const user = authResult.user;
-          
-          const docRef = doc(db, "users", user.uid);
-          const docSnap = await getDoc(docRef);
-          
-          if(docSnap.exists()) return true;
 
-          await setDoc(doc(db, "users", user.uid), {
-            id: user.uid,
-            email: user.email,
-            displayName: user.displayName || '',
-            createdAt: serverTimestamp(),
-          });
+          try {
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
 
-          await setDoc(doc(db, "userChats", user.uid), {
-            chats: [],
-          });
+            if (!docSnap.exists()) {
+              await setDoc(docRef, {
+                id: user.uid,
+                email: user.email,
+                displayName: user.displayName || '',
+                createdAt: serverTimestamp(),
+              });
+
+              await setDoc(doc(db, "userChats", user.uid), { chats: [] });
+            }
+
+            setLoading(false);
+            return true;
+          } catch (error) {
+            console.error("Error creating user document: ", error);
+            alert("Something went wrong. Please try again.");
+            setLoading(false);
+            return false;
+          }
         },
       },
-      signInOptions: [
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      ],
+      signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
     };
-    
-    // Ensure the UI starts when the component mounts
+
     ui.start('#firebaseui-auth-container', uiConfig);
 
     return () => {
-      // Cleanup: stop the UI instance when component unmounts or re-renders
       ui.reset();
     };
   }, []);
 
-  console.log('login');
+  if (loading) return <div>Loading...</div>;
 
-  return  (
+  return (
     <div id="firebaseui-auth-container"></div>
   );
 }
