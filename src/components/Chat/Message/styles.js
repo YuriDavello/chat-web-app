@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 10px;
 
-  align-items: ${props => (props.sender === 'me' ? 'end' : 'start')};
+  align-items: ${props => (props.isSenderCurrentUser === true ? 'end' : 'start')};
 `;
 
 export const Content = styled.div`
@@ -15,7 +15,7 @@ export const Content = styled.div`
 
   overflow-wrap: break-word;
 
-  background-color: ${props => (props.sender === 'me' ? '#005C4B' : '#202C33')};
+  background-color: ${props => (props.isSenderCurrentUser === true ? '#005C4B' : '#202C33')};
 `;
 
 export const Infos = styled.div`

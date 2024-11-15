@@ -15,9 +15,7 @@ function List({ type }) {
   const { currentUser } = useSelector(state => state.authenticate);
   const dispatch = useDispatch();
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-
+  const handleLogout = () => {
     dispatch(logout());
 
     auth.signOut();

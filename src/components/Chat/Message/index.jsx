@@ -1,53 +1,10 @@
+import { useSelector } from 'react-redux';
 import { Container, Content, Infos } from './styles.js'
 import { BiCheck, BiCheckDouble } from "react-icons/bi";
 
-const messages = [
-  {
-    id: 1,
-    content: 'Opa bom dia Yuri. Tudo bem com você mano?',
-    sender: 'me',
-    date: new Date().toISOString(),
-    status: 'sent'
-  },
-  {
-    id: 2,
-    content: 'Opa bom dia Yuri. Tudo bem com você mano?',
-    sender: 'me',
-    date: new Date().toISOString(),
-    status: 'delivered'
-  },
-  {
-    id: 3,
-    content: 'Opa bom dia Yuri. Tudo bem com você mano?',
-    sender: 'me',
-    date: new Date().toISOString(),
-    status: 'read'
-  },
-  {
-    id: 4,
-    content: 'Opa bom dia Yuri. Tudo bem com você mano?',
-    sender: 'friend',
-    date: new Date().toISOString(),
-    status: 'sent'
-  },
-  {
-    id: 5,
-    content: 'Opa bom dia Yuri. Tudo bem com você mano?',
-    sender: 'friend',
-    date: new Date().toISOString(),
-    status: 'delivered'
-  },
-  {
-    id: 6,
-    content: 'Opa bom dia Yuri. Tudo bem com você mano000000000000000000000000000000000000000000000000000000000000000000000000000000000000000?',
-    sender: 'friend',
-    date: new Date().toISOString(),
-    status: 'read'
-  }
-];
 
-const formatDate = (isoString) => {
-  const date = new Date(isoString);
+const formatDate = (date) => {
+  const dateToFormat = new Date(date);
 
   const formattedDate = new Intl.DateTimeFormat(navigator.language, {
     year: 'numeric',
@@ -56,7 +13,7 @@ const formatDate = (isoString) => {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false
-  }).format(date);
+  }).format(dateToFormat);
 
   return formattedDate.replace(',', '');
 }
@@ -82,22 +39,22 @@ const getStatusIcon = (status) => {
 }
 
 
-function Message() {
+function Message({ message }) {
+  const { currentUser } = useSelector(state => state.authenticate);
+
+  const isSenderCurrentUser = message.sender === currentUser.id ? true : false;
+
   return (
-    messages.map(message => {
-      return (
-        <Container key={message.id} sender={message.sender}>
-          <Content sender={message.sender}>
+        <Container key={message.createdAt} isSenderCurrentUser={isSenderCurrentUser}>
+          <Content isSenderCurrentUser={isSenderCurrentUser}>
             <p>{message.content}</p>
           </Content>
           <Infos>
-            <span>{formatDate(message.date)}</span>
-            {message.sender === 'me'&& getStatusIcon(message.status)}
+            <span>{formatDate(message.createdAt)}</span>
+            {isSenderCurrentUser && getStatusIcon(message.status)}
           </Infos>
         </Container>
       );
-    })
-  );
 }
 
 export default Message;
