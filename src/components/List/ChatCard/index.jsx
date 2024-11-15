@@ -1,16 +1,17 @@
 import { Container, ChatInfo } from './styles.js'
 import { IoPersonCircle } from "react-icons/io5"
 
-function ChatCard({ user }) {
+function ChatCard({ chat }) {
+  console.log('chat', chat);
   return (
   <Container>
   <IoPersonCircle size={60} color="#CCD6DD"/>
   <ChatInfo>
     <h2>
-      {user.name}
+      {chat.receiver.displayName}
     </h2>
     <p>
-      {user.lastMessage}
+      {chat.lastMessage}
     </p>
   </ChatInfo>
   </Container>

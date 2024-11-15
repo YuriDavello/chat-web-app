@@ -1,7 +1,7 @@
 import firebase from 'firebase/compat/app'
 import * as firebaseui from 'firebaseui'
 import { db, auth } from '../../db/fireBase.js'
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import 'firebaseui/dist/firebaseui.css'
 import { useEffect } from 'react';
 
@@ -24,7 +24,7 @@ function Login() {
             id: user.uid,
             email: user.email,
             displayName: user.displayName || '',
-            createdAt: new Date(),
+            createdAt: serverTimestamp(),
           });
 
           await setDoc(doc(db, "userChats", user.uid), {

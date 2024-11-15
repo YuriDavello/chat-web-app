@@ -13,7 +13,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unSub = onAuthStateChanged(auth, firebaseUser => {
+    const unsub = onAuthStateChanged(auth, firebaseUser => {
       if (firebaseUser) {
         dispatch(login({
           id: firebaseUser.uid,
@@ -26,7 +26,7 @@ function App() {
     });
 
     return () => {
-      unSub();
+      unsub();
     }
   }, [dispatch]);
 
@@ -50,4 +50,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
