@@ -79,7 +79,7 @@ function Chat() {
     <Container>
       <Header>
         <IoPersonCircle size={40} color="#CCD6DD" />
-        <span>{receiver.displayName}</span>
+        <h2>{receiver.displayName}</h2>
       </Header>
       <Messages>
         {messages.map(message => {

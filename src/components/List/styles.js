@@ -12,14 +12,10 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  background-color: #111B21;
+  background-color: var(--bg-color);
   height: 59px;
   padding-right: 20px;
   padding-left: 25px;
-
-  h1 {
-    font-size: 25px;
-  }
 
   >div {
     display: flex;

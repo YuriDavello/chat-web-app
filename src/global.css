@@ -1,13 +1,20 @@
 :root {
-  --title-md: bold 1.125rem/1.2 sans-serif;
-  --text-sm: 0.875rem/1.4 sans-serif;
+  --title-md: bold 24px/120% "Asap", sans-serif;
+  --title-sm: bold 20px/120% "Asap", sans-serif;
+  --text-md: 16px/140% "Maven Pro", sans-serif;
+  --text-sm: 14px/140% "Maven Pro", sans-serif;
+  --text-info: 13px/140% "Maven Pro", sans-serif;
 
-  --primary-color: #2C3531;
-  --secondary-color: #116466;
+  --bg-color: #111B21;
+  --secondary-bg-color: #202C33;
+  --hover-color: #1A262D;
+  --selected-color: #2A3942;
+
   --unseen-color: #1E90FF;
-  --hover-color: #3B4640;
-  --active-color: #4A5A54;
-  --tertiary-color: #D1E8E2;
+  --unseen-hover-color: #4dabf7;
+  --close-color: #e63946;
+  --close-hover-color: #ff4d4d;
+
   --color-gray-500: #C0C4CE;
   --color-gray-600: #E2E4E9;
 }
@@ -48,22 +55,10 @@ body {
   justify-content: center;
 
   height: 100vh;
-  color: white;
+  color: var(--color-gray-600);
 }
 
-/*h2 {
-  margin: 0;
+h2 {
   font: var(--title-md);
   color: var(--color-gray-600);
 }
-
-p {
-  margin: 0;
-  font: var(--text-sm);
-  color: var(--color-gray-600);
-}
-
-span {
-  font: var(--text-sm);
-  color: var(--color-gray-500);
-}*/

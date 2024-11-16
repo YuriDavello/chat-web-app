@@ -48,9 +48,9 @@ function List({ type }) {
   return (
     <Container type={type}>
       <Header>
-        <h1>
+        <h2>
           Chats
-        </h1>
+        </h2>
         <div>
           <BiLogOut
             size={25}

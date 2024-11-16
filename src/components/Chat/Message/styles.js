@@ -4,6 +4,16 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: ${props => (props.isSenderCurrentUser === true ? 'end' : 'start')};
+
+  p {
+    font: var(--text-sm);
+    color: var(--color-gray-600);
+  }
+
+  span {
+    font: var(--text-info);
+    color: var(--color-gray-500);
+  }
 `;
 
 export const Content = styled.div`

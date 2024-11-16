@@ -28,20 +28,16 @@ export const modaStyle = {
   },
 };
 
-export const Title = styled.h2`
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #e2e8f0;
-`;
-
 export const Input = styled.input`
   width: 100%;
   border: none;
   outline: none;
   color: white;
-  background-color: #202C33;
+  background-color: var(--secondary-bg-color);
   padding: 15px;
   border-radius: 5px;
+  font: var(--text-md);
+  color: var(--color-gray-600);
 `;
 
 export const Buttons = styled.div`
@@ -53,17 +49,15 @@ export const Buttons = styled.div`
 `;
 
 export const Button = styled.button`
-  background-color: ${props => (props.buttonType === 'close' ? '#e63946' : '#4dabf7')};
-  color: #ffffff;
-  border: ${props => (props.buttonType === 'close' ? '1px solid #cc3c3c' : '1px solid #3a91cc')};
+  font: var(--text-md);
+  color: var(--color-gray-600);
+  background-color: ${props => (props.buttonType === 'close' ? 'var(--close-color)' : 'var(--unseen-color)')};
+  border: none;
   padding: 10px 20px;
   border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    background-color: ${props => (props.buttonType === 'close' ? '#ff4d4d' : '#5bc0de')};
-    box-shadow: ${props => (props.buttonType === 'close' ? '0 0 10px rgba(255, 77, 77, 0.8)' : 'background-color: #3a91cc')};
+    background-color: ${props => (props.buttonType === 'close' ? 'var(--close-hover-color)' : 'var(--unseen-hover-color)')};
   }
 `;

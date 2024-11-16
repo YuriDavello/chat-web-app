@@ -14,11 +14,7 @@ export const updateMessageStatus = async (chatId, currentUserId, currentChatId =
       if (message.sender !== currentUserId && message.status !== "read") {
         let status = currentChatId === chatId ? "read" : "delivered";
 
-        console.log('status', status);
-
         status = markAllAsRead === true ? 'read' : status;
-
-        console.log('status2', status);
 
         return { ...message, status };
       }

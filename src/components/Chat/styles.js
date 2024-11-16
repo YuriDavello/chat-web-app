@@ -11,13 +11,12 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
-  background-color: #111B21;
+  background-color: var(--bg-color);
   height: 59px;
   padding: 10px 16px;
 
-  span {
-    font-size: 22px;
-    font-weight: 500;
+  h2 {
+    font: var(--title-sm);
   }
 `;
 
@@ -37,7 +36,7 @@ export const Footer = styled.div`
   padding-right: 10px;
   gap: 5px;
   height: 67px;
-  background-color: #111B21;
+  background-color: var(--bg-color);
 `;
 
 export const TextArea = styled.textarea`
@@ -46,9 +45,10 @@ export const TextArea = styled.textarea`
   outline: none;
   padding: 8px;
   background-color: transparent;
-  color: var(--tertiary-color);
+  color: var(--color-gray-500);
   font-size: 16px;
   resize: none;
   min-height: 40px;
   overflow-y: auto;
+  font: var(--text-md);
 `;

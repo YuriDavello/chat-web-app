@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import { db } from '../../../db/fireBase.js';
 import { arrayUnion, collection, doc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
-import { modaStyle, Title, Input, Buttons, Button } from './styles.js';
+import { modaStyle, Input, Buttons, Button } from './styles.js';
 import { toast } from 'react-toastify';
 
 function AddChat({ isOpen, onClose }) {
@@ -31,8 +31,6 @@ function AddChat({ isOpen, onClose }) {
       });
       return;
     };
-
-    console.log('current user', currentUser);
 
     if (inputValue.toUpperCase() === currentUser.email.toUpperCase()) {
       toast.error("Can not add yourself.", {
@@ -91,7 +89,7 @@ function AddChat({ isOpen, onClose }) {
       onRequestClose={onClose}
       style={modaStyle}
     >
-      <Title>Add Chat</Title>
+      <h2>Add Chat</h2>
       <Input ref={inputRef} type='text' placeholder='User email...' />
       <Buttons>
         <Button type='button' buttonType="add" onClick={handleAdd}>Add</Button>

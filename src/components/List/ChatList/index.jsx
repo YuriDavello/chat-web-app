@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Container, Search, List, ChatCard, LastMessageInfo } from './styles.js'
 import { MdSearch } from "react-icons/md"
 import { IoPersonCircle } from "react-icons/io5"
+import { GoDotFill } from "react-icons/go";
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../db/fireBase.js';
 import { updateMessageStatus } from '../../../Utils/updateMessagesStatus.js';
 import { changeChat } from '../../../slicers/chat.js';
 import { useState, useRef, useEffect } from 'react';
-import { getStatusIcon } from '../../../Utils/getStatusIcon.jsx';
 
 function ChatList({ chats }) {
   const [filteredChats, setFilteredChats] = useState(chats);
@@ -79,7 +79,7 @@ function ChatList({ chats }) {
       </Search>
       <List>
         {filteredChats?.map(chat => (
-          <ChatCard isSelected={selectedChat === chat.chatId} onClick={() => handleSelectChat(chat)} isSeen={chat.isSeen} key={chat.chatId}>
+          <ChatCard isSelected={selectedChat === chat.chatId} onClick={() => handleSelectChat(chat)} key={chat.chatId}>
             <IoPersonCircle size={60} color="#CCD6DD" />
             <div>
               <h2>
@@ -87,10 +87,11 @@ function ChatList({ chats }) {
               </h2>
               <LastMessageInfo>
                 {chat.lastMessageInfo?.sender === currentUser.id &&
-                  getStatusIcon(chat.lastMessageInfo?.status)}
+                  <span>You:</span>}
                 <p>
                   {chat.lastMessage}
                 </p>
+                {chat.isSeen === false && <GoDotFill color="#4dabf7" />}
               </LastMessageInfo>
             </div>
           </ChatCard>
