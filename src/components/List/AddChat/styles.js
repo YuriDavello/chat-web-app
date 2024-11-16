@@ -1,52 +1,69 @@
 import styled from 'styled-components';
 
-export const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 0;
-`;
+export const modaStyle = {
+  content: {
+    border: 'none',
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 1050,
+    position: 'relative',
+    width: '448px',
+    height: '188px',
+    padding: '1.5rem',
+    backgroundColor: '#3B4A54',
+    borderRadius: '0.5rem',
+    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  overlay: {
+    zIndex: 1040,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+};
 
-export const Container = styled.div`
-  display: flex;
-  gap: 8px;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  background-color: rgba(50, 50, 50, 0.9); 
-  padding: 20px;
-
-  border-radius: 10px;
+export const Title = styled.h2`
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e2e8f0;
 `;
 
 export const Input = styled.input`
-  padding: 12px;
-  
-  border: 0;
+  width: 100%;
+  border: none;
   outline: none;
+  color: white;
+  background-color: #202C33;
+  padding: 15px;
+  border-radius: 5px;
+`;
 
-  background-color: white;
-  border-radius: 8px;
-
-  font-size: 14px;
+export const Buttons = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: end;
+  gap: 10px;
 `;
 
 export const Button = styled.button`
-  padding: 0 16px;
-  
-  border: 0;
-  outline: none;
-
-  background-color: black;
-  color: white;
-  font-size: 14px;
-
-  border-radius: 8px;
+  background-color: ${props => (props.buttonType === 'close' ? '#e63946' : '#4dabf7')};
+  color: #ffffff;
+  border: ${props => (props.buttonType === 'close' ? '1px solid #cc3c3c' : '1px solid #3a91cc')};
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    background-color: ${props => (props.buttonType === 'close' ? '#ff4d4d' : '#5bc0de')};
+    box-shadow: ${props => (props.buttonType === 'close' ? '0 0 10px rgba(255, 77, 77, 0.8)' : 'background-color: #3a91cc')};
+  }
 `;

@@ -1,10 +1,12 @@
 import { useRef } from 'react';
-import { Container, Input, Button, Overlay } from './styles.js';
+import Modal from 'react-modal';
 import { db } from '../../../db/fireBase.js';
 import { arrayUnion, collection, doc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
+import { modaStyle, Title, Input, Buttons, Button } from './styles.js';
+import { toast } from 'react-toastify';
 
-function AddChat({ isOpen, onClose, onAddChat }) {
+function AddChat({ isOpen, onClose }) {
   const { currentUser } = useSelector(state => state.authenticate);
   const inputRef = useRef(null);
 
@@ -21,15 +23,31 @@ function AddChat({ isOpen, onClose, onAddChat }) {
   }
 
   const handleAdd = async () => {
-    const inputValue = inputRef.current.value;
+    const inputValue = inputRef.current?.value;
 
-    if (!inputValue) return;
+    if (!inputValue) {
+      toast.info("Provide an email.", {
+        position: "top-right"
+      });
+      return;
+    };
+
+    console.log('current user', currentUser);
+
+    if (inputValue.toUpperCase() === currentUser.email.toUpperCase()) {
+      toast.error("Can not add yourself.", {
+        position: "top-right"
+      });
+      return;
+    }
 
     try {
       const userToAdd = await getUserToAdd(inputValue);
 
       if (!userToAdd) {
-        /**TODO: toast informando */
+        toast.error("User not found.", {
+          position: "top-right"
+        });
         return;
       }
 
@@ -61,26 +79,25 @@ function AddChat({ isOpen, onClose, onAddChat }) {
         }),
       });
 
+      onClose();
     } catch (error) {
       console.log(error);
-    } finally {
-      onClose();
     }
-
   };
 
   return (
-    <>
-      {isOpen && (
-        <>
-          <Overlay />
-          <Container>
-            <Input type="text" placeholder="User E-mail" ref={inputRef} />
-            <Button type="button" onClick={handleAdd}>Add</Button>
-          </Container>
-        </>
-      )}
-    </>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      style={modaStyle}
+    >
+      <Title>Add Chat</Title>
+      <Input ref={inputRef} type='text' placeholder='User email...' />
+      <Buttons>
+        <Button type='button' buttonType="add" onClick={handleAdd}>Add</Button>
+        <Button type='button' buttonType="close" onClick={onClose}>Close</Button>
+      </Buttons>
+    </Modal>
   );
 }
 

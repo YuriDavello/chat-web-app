@@ -1,12 +1,11 @@
-import { useSelector } from 'react-redux'
-import { useEffect, useRef, useState } from 'react'
-import { Container, Header, Messages, InputContainer, Input, UserStatus } from './styles.js'
-import { IoMdSend } from "react-icons/io"
-import { IoPersonCircle } from "react-icons/io5"
-import { FaCircle } from "react-icons/fa"
-import Message from './Message'
-import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore'
-import { db } from '../../db/fireBase.js'
+import { useSelector } from 'react-redux';
+import { useEffect, useRef, useState } from 'react';
+import { Container, Header, Messages, Footer, TextArea } from './styles.js';
+import { IoMdSend } from "react-icons/io";
+import { IoPersonCircle } from "react-icons/io5";
+import Message from './Message';
+import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { db } from '../../db/fireBase.js';
 
 function Chat() {
   const { receiver, chatId } = useSelector(state => state.chat);
@@ -17,14 +16,13 @@ function Chat() {
   const inputMessageRef = useRef(null);
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
+    endRef.current?.scrollIntoView();
+  }, [messages]);
 
   useEffect(() => {
     if (chatId) {
       const unsub = onSnapshot(doc(db, "chats", chatId), async res => {
         const { messages } = res.data();
-
         setMessages(messages);
       });
 
@@ -41,7 +39,6 @@ function Chat() {
     inputMessageRef.current.value = "";
 
     try {
-
       await updateDoc(doc(db, "chats", chatId), {
         messages: arrayUnion({
           sender: currentUser.id,
@@ -59,7 +56,6 @@ function Chat() {
 
         if (userChatsSnapshot.exists()) {
           const userChatsData = userChatsSnapshot.data();
-
           const chatIndex = userChatsData.chats.findIndex(chat => chat.chatId === chatId);
 
           userChatsData.chats[chatIndex].lastMessage = messageToSend;
@@ -82,14 +78,8 @@ function Chat() {
   return (
     <Container>
       <Header>
-        <IoPersonCircle size={60} color="#CCD6DD" />
-        <div>
-          <h2>{receiver.displayName}</h2>
-          <UserStatus>
-            <FaCircle size={10} color="#00FF00" />
-            <span>Online</span>
-          </UserStatus>
-        </div>
+        <IoPersonCircle size={40} color="#CCD6DD" />
+        <span>{receiver.displayName}</span>
       </Header>
       <Messages>
         {messages.map(message => {
@@ -99,10 +89,14 @@ function Chat() {
         })}
         <div ref={endRef} />
       </Messages>
-      <InputContainer>
-        <Input ref={inputMessageRef} type='text' placeholder='Type a message...' />
+      <Footer>
+        <TextArea
+          ref={inputMessageRef}
+          as="textarea"
+          placeholder='Type a message...'
+        />
         <IoMdSend size={30} color="#888" cursor="pointer" onClick={handleSendMessage} />
-      </InputContainer>
+      </Footer>
     </Container>
   );
 }

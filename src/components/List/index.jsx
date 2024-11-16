@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../slicers/auth.js';
-import { Container, Toolbar, SearchBar, ChatList } from './styles.js';
+import { Container, Header } from './styles.js';
 import { BiSolidMessageAdd, BiLogOut } from "react-icons/bi";
-import ChatCard from './ChatCard';
 import AddChat from './AddChat';
 import useChats from '../../hooks/useChats.js';
 import { updateMessageStatus } from '../../Utils/updateMessagesStatus.js';
 import { auth, db } from '../../db/fireBase.js';
 import { doc, onSnapshot } from 'firebase/firestore';
+import ChatList from './ChatList/index.jsx';
 
 function List({ type }) {
   const [isShowAddChat, setIsShowAddChat] = useState(false);
@@ -47,33 +47,29 @@ function List({ type }) {
 
   return (
     <Container type={type}>
-      <Toolbar>
-        {type === 'oneToOne' && (
+      <Header>
+        <h1>
+          Chats
+        </h1>
+        <div>
           <BiLogOut
-            size={30}
-            color="#2C3531"
+            size={25}
+            color="#AEBAC1"
             cursor="pointer"
             onClick={handleLogout}
             aria-label="Logout"
           />
-        )}
-        <SearchBar placeholder='Search...' type='text' />
-        {type === 'oneToOne' &&
           <BiSolidMessageAdd
-            size={30}
-            color="#2C3531"
+            size={25}
+            color="#AEBAC1"
             cursor="pointer"
             onClick={openAddChat}
             aria-label="Add new chat"
           />
-        }
-      </Toolbar>
-      <ChatList>
-        {chats.map(chat => (
-          <ChatCard key={`${chat.receiverId}-${chat.updatedAt}`} chat={chat} chats={chats} />
-        ))}
-      </ChatList>
-      {type === 'oneToOne' && <AddChat isOpen={isShowAddChat} onClose={closeAddChat} />}
+        </div>
+      </Header>
+      <ChatList chats={chats} />
+      <AddChat isOpen={isShowAddChat} onClose={closeAddChat} />
     </Container>
   );
 }

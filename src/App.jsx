@@ -16,12 +16,11 @@ function App() {
   if (isLoading) return <Loading />;
 
   return (
-    <Container isLoggedIn={isLoggedIn}>
+    <Container>
       {isLoggedIn ? (
         <>
-          <List type="oneToOne" />
+          <List />
           <Chat />
-          <List type="group" />
         </>
       ) : (
         <Login />

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Container, Content, Infos } from './styles.js'
-import { BiCheck, BiCheckDouble } from "react-icons/bi";
+import { getStatusIcon } from '../../../Utils/getStatusIcon.jsx'
 
 
 const formatDate = (date) => {
@@ -17,27 +17,6 @@ const formatDate = (date) => {
 
   return formattedDate.replace(',', '');
 }
-
-const getStatusIcon = (status) => {
-  let statusIcon;
-
-  switch (status) {
-    case 'delivered':
-      statusIcon = <BiCheckDouble size={22} color="#888" />;
-      break;
-
-    case 'read':
-      statusIcon = <BiCheckDouble size={22} color="#25D366" />;
-      break;
-
-    default:
-      statusIcon = <BiCheck size={22} color="#888" />;
-      break;
-  }
-
-  return statusIcon;
-}
-
 
 function Message({ message }) {
   const { currentUser } = useSelector(state => state.authenticate);

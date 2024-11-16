@@ -2,73 +2,53 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   flex: 2;
-  min-width: 70vw;
-
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 
 export const Header = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 15px;
+  background-color: #111B21;
+  height: 59px;
+  padding: 10px 16px;
 
-  height: auto;
-  padding: 3px 20px;
-  
-  background-color: #1F2623;
-
-  &>div:nth-child(2) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    
-    width: 100%;
+  span {
+    font-size: 22px;
+    font-weight: 500;
   }
-`;
-
-export const UserStatus = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
 `;
 
 export const Messages = styled.div`
   flex: 1;
-
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-
-  overflow: auto;
-
-  padding: 20px 50px;
-
+  overflow-y: auto;
   background-color: #0F4F4F;
+  gap: 10px;
 `;
 
-export const InputContainer = styled.div`
+export const Footer = styled.div`
   display: flex;
   align-items: center;
+  padding-right: 10px;
   gap: 5px;
-
-  padding-inline: 15px;
-  height: auto;
-
-  background-color: #1F2623;
+  height: 67px;
+  background-color: #111B21;
 `;
 
-export const Input = styled.input`
+export const TextArea = styled.textarea`
   flex: 1;
-
-  padding: 20px;
-
   border: 0;
   outline: none;
-
+  padding: 8px;
   background-color: transparent;
   color: var(--tertiary-color);
-
   font-size: 16px;
+  resize: none;
+  min-height: 40px;
+  overflow-y: auto;
 `;

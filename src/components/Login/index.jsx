@@ -4,6 +4,7 @@ import { db, auth } from '../../db/fireBase.js';
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import 'firebaseui/dist/firebaseui.css';
 import { useEffect, useState } from 'react';
+import { style } from './styles.js'
 
 function Login() {
   const [loading, setLoading] = useState(false);
@@ -55,7 +56,7 @@ function Login() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div id="firebaseui-auth-container"></div>
+    <div style={style} id="firebaseui-auth-container"></div>
   );
 }
 
