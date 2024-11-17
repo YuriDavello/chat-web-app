@@ -5,15 +5,15 @@ export const getStatusIcon = (status) => {
 
   switch (status) {
     case 'delivered':
-      statusIcon = <BiCheckDouble size={22} color="#888" />;
+      statusIcon = <BiCheckDouble data-testid="bi-check-double" size={22} color="#888" />;
       break;
 
     case 'read':
-      statusIcon = <BiCheckDouble size={22} color="#25D366" />;
+      statusIcon = <BiCheckDouble data-testid="bi-check-double" size={22} color="#25D366" />;
       break;
 
     default:
-      statusIcon = <BiCheck size={22} color="#888" />;
+      statusIcon = <BiCheck data-testid="bi-check" size={22} color="#888" />;
       break;
   }
 

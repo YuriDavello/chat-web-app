@@ -21,7 +21,7 @@ const formatDate = (date) => {
 function Message({ message }) {
   const { currentUser } = useSelector(state => state.authenticate);
 
-  const isSenderCurrentUser = message.sender === currentUser.id ? true : false;
+  const isSenderCurrentUser = message.sender === currentUser?.id ? true : false;
 
   return (
     <Container key={message.createdAt} isSenderCurrentUser={isSenderCurrentUser}>
