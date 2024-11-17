@@ -32,6 +32,10 @@ function Chat() {
     }
   }, [chatId]);
 
+  useEffect(() => {
+    inputMessageRef.current.value = "";
+  }, [chatId]);
+
   const handleSendMessage = async () => {
     const messageToSend = inputMessageRef.current.value;
 
@@ -94,6 +98,12 @@ function Chat() {
           ref={inputMessageRef}
           as="textarea"
           placeholder='Type a message...'
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              handleSendMessage();
+            }
+          }}
         />
         <IoMdSend size={30} color="#888" cursor="pointer" onClick={handleSendMessage} />
       </Footer>

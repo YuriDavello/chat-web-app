@@ -41,7 +41,9 @@ function useChats(userId) {
         }
       });
 
-      return () => unsub();
+      return () => {
+        unsub()
+      };
     }
   }, [userId]);
 

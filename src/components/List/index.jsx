@@ -6,9 +6,11 @@ import { BiSolidMessageAdd, BiLogOut } from "react-icons/bi";
 import AddChat from './AddChat';
 import useChats from '../../hooks/useChats.js';
 import { updateMessageStatus } from '../../Utils/updateMessagesStatus.js';
-import { auth, db } from '../../db/fireBase.js';
+import { auth, db, rtdb } from '../../db/fireBase.js';
 import { doc, onSnapshot } from 'firebase/firestore';
 import ChatList from './ChatList/index.jsx';
+import usePresence from '../../hooks/usePresence.js';
+import { ref, serverTimestamp, set } from 'firebase/database';
 
 function List({ type }) {
   const [isShowAddChat, setIsShowAddChat] = useState(false);
@@ -17,8 +19,20 @@ function List({ type }) {
   const dispatch = useDispatch();
 
   const chats = useChats(currentUser.id);
+  console.log('chats', chats);
 
-  const handleLogout = () => {
+  usePresence();
+
+  const handleLogout = async () => {
+    const userStatusDatabaseRef = ref(rtdb, `status/${currentUser.id}`);
+
+    const isOfflineForDatabase = {
+      state: 'offline',
+      last_changed: serverTimestamp(),
+    };
+
+    await set(userStatusDatabaseRef, isOfflineForDatabase);
+
     dispatch(logout());
     auth.signOut();
   };
@@ -42,7 +56,9 @@ function List({ type }) {
       await Promise.all(promises);
     });
 
-    return () => unsub();
+    return () => {
+      unsub();
+    };
   }, [chatId, currentUser.id]);
 
   return (

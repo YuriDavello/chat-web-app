@@ -1,7 +1,7 @@
 import firebase from 'firebase/compat/app';
 import * as firebaseui from 'firebaseui';
 import { db, auth } from '../../db/fireBase.js';
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import 'firebaseui/dist/firebaseui.css';
 import { useEffect, useState } from 'react';
 import { style } from './styles.js'
@@ -19,19 +19,16 @@ function Login() {
           const user = authResult.user;
 
           try {
-            const docRef = doc(db, "users", user.uid);
-            const docSnap = await getDoc(docRef);
+            const userRef = doc(db, "users", user.uid);
 
-            if (!docSnap.exists()) {
-              await setDoc(docRef, {
-                id: user.uid,
-                email: user.email,
-                displayName: user.displayName || '',
-                createdAt: serverTimestamp(),
-              });
+            await setDoc(userRef, {
+              id: user.uid,
+              email: user.email,
+              displayName: user.displayName || '',
+              createdAt: serverTimestamp(),
+            });
 
-              await setDoc(doc(db, "userChats", user.uid), { chats: [] });
-            }
+            await setDoc(doc(db, "userChats", user.uid), { chats: [] });
 
             setLoading(false);
             return true;
