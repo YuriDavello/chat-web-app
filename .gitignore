@@ -36,3 +36,4 @@ out
 *.sw?
 ".env" 
 .env
+.env
