@@ -17,7 +17,7 @@ function Chat() {
 
   useEffect(() => {
     endRef.current?.scrollIntoView();
-  }, [messages]);
+  }, [messages, currentUser.id]);
 
   useEffect(() => {
     if (chatId) {
@@ -30,11 +30,11 @@ function Chat() {
         unsub();
       };
     }
-  }, [chatId]);
+  }, [chatId, currentUser.id]);
 
   useEffect(() => {
     inputMessageRef.current.value = "";
-  }, [chatId]);
+  }, [chatId, currentUser.id]);
 
   const handleSendMessage = async () => {
     const messageToSend = inputMessageRef.current.value;
