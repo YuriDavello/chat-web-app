@@ -11,8 +11,8 @@ A React-based chat application built with Firebase.
 
 1. Clone the repository:  
    ```bash
-   git clone <repository-url>
-   cd chat-app
+   git clone [<repository-url>]
+   cd chat-web-app
    ```
 
 2. Install dependencies:  
