@@ -1,6 +1,5 @@
-/*import { doc, setDoc, serverTimestamp } from 'firebase/firestore';*/
 import { ref, onValue, onDisconnect, set, serverTimestamp as rtdbServerTimestamp } from 'firebase/database';
-import { /*db,*/ auth, rtdb } from '../db/fireBase';
+import { auth, rtdb } from '../db/fireBase';
 import { useEffect } from 'react';
 
 const usePresence = () => {

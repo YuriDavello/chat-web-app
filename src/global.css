@@ -15,6 +15,9 @@
   --close-color: #e63946;
   --close-hover-color: #ff4d4d;
 
+  --online-color: #28A745;
+  --offline-color: #6C757D;
+
   --color-gray-500: #C0C4CE;
   --color-gray-600: #E2E4E9;
 }

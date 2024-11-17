@@ -86,7 +86,7 @@ function Chat() {
         <h2>{receiver.displayName}</h2>
       </Header>
       <Messages>
-        {messages.map(message => {
+        {messages?.map(message => {
           return (
             <Message key={message?.createdAt} message={message} />
           );

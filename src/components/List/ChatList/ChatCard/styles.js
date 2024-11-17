@@ -9,19 +9,24 @@ export const Container = styled.div`
       : props.isSelected
         ? "var(--selected-color)"
         : "var(--bg-color)"};
-  height: 72px;
+  height: 80px;
   gap: 10px;
   padding: 10px;
   cursor: pointer;
   border-bottom: 0.5px solid #202C33;
   border-left: ${props =>
-    props.isSelected
-      ? "5px solid #00AF9C"
-      : "none"};
+    props.status === 'online'
+      ? "5px solid var(--online-color)"
+      : "5px solid var(--offline-color)"};
 
   >div {
     width: 100%;
     max-width: 400px;
+
+    span {
+      font: var(--text-info);
+      color: var(--color-gray-500);
+    }
   }
 
   &:hover {

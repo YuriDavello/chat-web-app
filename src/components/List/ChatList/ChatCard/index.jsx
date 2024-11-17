@@ -29,7 +29,7 @@ function ChatCard({ chat, handleSelectChat, isSelected }) {
   }, [chat.receiver.receiverId]);
 
   return (
-    <Container isSelected={isSelected} isSeen={chat.isSeen} onClick={() => handleSelectChat(chat)} key={chat.chatId}>
+    <Container isSelected={isSelected} status={status} isSeen={chat.isSeen} onClick={() => handleSelectChat(chat)} key={chat.chatId}>
       <IoPersonCircle size={60} color="#CCD6DD" />
       <div>
         <h2>
@@ -42,6 +42,7 @@ function ChatCard({ chat, handleSelectChat, isSelected }) {
             {chat.lastMessage}
           </p>
         </LastMessageInfo>
+        <span>{status}</span>
       </div>
     </Container>
   );
