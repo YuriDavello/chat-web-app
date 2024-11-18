@@ -37,6 +37,8 @@ function Chat() {
   }, [chatId, currentUser.id]);
 
   const handleSendMessage = async () => {
+    if (!chatId) return;
+
     const messageToSend = inputMessageRef.current.value;
 
     if (!messageToSend || !chatId) return;

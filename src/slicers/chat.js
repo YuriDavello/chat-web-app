@@ -16,9 +16,14 @@ export const chatSilcer = createSlice({
       state.receiver.id = receiverId;
       state.receiver.displayName = displayName;
     },
+    clearChat: (state) => {
+      state.chatId = null;
+      state.receiver.id = null;
+      state.receiver.displayName = null;
+    },
   },
 });
 
-export const { changeChat } = chatSilcer.actions;
+export const { changeChat, clearChat } = chatSilcer.actions;
 
 export default chatSilcer.reducer;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../slicers/auth.js';
+import { clearChat } from '../../slicers/chat.js';
 import { Container, Header } from './styles.js';
 import { BiSolidMessageAdd, BiLogOut } from "react-icons/bi";
 import AddChat from './AddChat';
@@ -19,7 +20,6 @@ function List({ type }) {
   const dispatch = useDispatch();
 
   const chats = useChats(currentUser.id);
-  console.log('chats', chats);
 
   usePresence();
 
@@ -32,8 +32,8 @@ function List({ type }) {
     };
 
     await set(userStatusDatabaseRef, isOfflineForDatabase);
-
     dispatch(logout());
+    dispatch(clearChat());
     auth.signOut();
   };
 
