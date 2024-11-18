@@ -117,7 +117,7 @@ If you encounter any issues:
 
 1. Install all dependencies with correct versions.  
 2. Run the development server.  
-3. Run the test suites (both Jest and Cypress).  
+3. Run the test suites (Cypress).  
 4. Build the project for production.  
 5. Understand the project structure.  
 6. Set up Firebase configuration.
