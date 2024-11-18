@@ -83,6 +83,7 @@ npx cypress open
    VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
    VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
    VITE_FIREBASE_APP_ID=your_app_id
+   VITE_FIREBASE_DATABASE_URL=your_database_url
    ```
 
 ## Troubleshooting
@@ -117,7 +118,7 @@ If you encounter any issues:
 
 1. Install all dependencies with correct versions.  
 2. Run the development server.  
-3. Run the test suites (both Jest and Cypress).  
+3. Run the test suites (Cypress).  
 4. Build the project for production.  
 5. Understand the project structure.  
 6. Set up Firebase configuration.
