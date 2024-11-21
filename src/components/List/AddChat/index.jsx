@@ -90,7 +90,17 @@ function AddChat({ isOpen, onClose }) {
       style={modaStyle}
     >
       <h2>Add Chat</h2>
-      <Input ref={inputRef} type='text' placeholder='User email...' />
+      <Input
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleAdd();
+          }
+        }}
+        ref={inputRef}
+        type='text'
+        placeholder='User email...'
+      />
       <Buttons>
         <Button type='button' buttonType="add" onClick={handleAdd}>Add</Button>
         <Button type='button' buttonType="close" onClick={onClose}>Close</Button>
